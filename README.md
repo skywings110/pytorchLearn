@@ -117,4 +117,60 @@ tensor.device()获取
 ```
 
 ### 3.3. 计算tensor
+
 3.3.1. addition
+创建一个tensor
+```python
+tensor = torch.tensor([1, 2, 3])
+# 执行加标量运算
+tensor + 10
+# 结果为
+tensor([11, 12, 13])
+
+# 内置加法
+torch.add(tensor, 10)
+# 结果为
+tensor([11, 12, 13])
+
+```
+
+3.3.2. subtraction
+```python
+# 执行减标量运算
+tensor - 10
+# 结果为
+tensor([-9, -8, -7])
+```
+3.3.3. multiplication(element-wise)元素乘法
+```python
+# 执行乘法
+tensor * 10
+# 结果为
+tensor([10, 20, 30])
+
+# 也可以使用内置乘法
+torch.mul(tensor, 10)
+# 结果为
+tensor([10, 20, 30])
+```
+
+3.3.4. 除法
+3.3.5. 矩阵乘法
+```python
+# 执行矩阵乘法运算
+torch.matmul(tensor, tenosr)
+# 结果为
+14
+# 或者使用@
+tensor @ tensor
+# 结果为
+14
+# 或者使用torch.mm
+torch.mm(tensor, tensor)
+# 结果为
+14
+```
+发现个很有意思的讲矩阵的网站http://matrixmultiplication.xyz/  
+
+## 3.4. 转置
+tensor.T为tensor的转置  
