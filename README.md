@@ -91,7 +91,11 @@ tensor([0, 0, 0, 0])
 ```
 
 ## 3.2. 数据类型  
-常见的pytorch中的错误,tensor类型错误，tensor形状错误，tensor没在正确的device上  
+常见的pytorch中的错误：  
+tensor类型错误，使用.type  
+tensor形状错误，使用.size()或.shape  
+tensor没在正确的device上，使用.device    
+
 创建张量预选有几个选项比较重要， 分别是dtype, device, requires_grade
 ```python
 float_32_tensor = torch.tensor([3.0, 6.0, 9.0]，
@@ -101,9 +105,16 @@ float_32_tensor = torch.tensor([3.0, 6.0, 9.0]，
 #改变数据类型
 float_16_tensor = float_32_tensor.type(torch.float16)                            
 ```
-### 3.3. dtype
+### 3.2.1. dtype
 默认为 torch.float32, 可以强制更改为torch.float16等
 .dtype来看数据类型
 
-### 3.4. device
+### 3.2.2. device
 device可以是cpu，也可以是cuda，默认是None
+```python
+# 可以用
+tensor.device()获取
+```
+
+### 3.3. 计算tensor
+3.3.1. addition
