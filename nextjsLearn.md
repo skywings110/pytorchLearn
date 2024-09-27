@@ -34,5 +34,5 @@ Link标签不会找server端处理，直接就显示，实现客户端路由。
 layout的东西可以改变下面的所有page，通常做最上面的导航栏比较好
 
 # 5. 组件
-## 5.2. <Image>
-默认loading = "lazy"，格式是webp，比png更有效，像页面logo这种没有内容转移或者闪烁的就优先加载。这种在<Image priority>
+## 5.2. Image
+默认loading = "lazy"，格式是webp，比png更有效，像页面logo这种没有内容转移或者闪烁的就优先加载。这种在Image 标签里加priority
