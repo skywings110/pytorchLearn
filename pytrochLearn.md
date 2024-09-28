@@ -116,9 +116,9 @@ device可以是cpu，也可以是cuda，默认是None
 tensor.device()获取
 ```
 
-### 3.3. 计算tensor
+## 3.3. 计算tensor
 
-3.3.1. addition
+### 3.3.1. addition
 创建一个tensor
 ```python
 tensor = torch.tensor([1, 2, 3])
@@ -134,14 +134,14 @@ tensor([11, 12, 13])
 
 ```
 
-3.3.2. subtraction
+### 3.3.2. subtraction
 ```python
 # 执行减标量运算
 tensor - 10
 # 结果为
 tensor([-9, -8, -7])
 ```
-3.3.3. multiplication(element-wise)元素乘法
+### 3.3.3. multiplication(element-wise)元素乘法
 ```python
 # 执行乘法
 tensor * 10
@@ -154,8 +154,8 @@ torch.mul(tensor, 10)
 tensor([10, 20, 30])
 ```
 
-3.3.4. 除法
-3.3.5. 矩阵乘法
+### 3.3.4. 除法
+### 3.3.5. 矩阵乘法
 ```python
 # 执行矩阵乘法运算
 torch.matmul(tensor, tenosr)
@@ -174,3 +174,133 @@ torch.mm(tensor, tensor)
 
 ## 3.4. 转置
 tensor.T为tensor的转置  
+## 3.5. min, max, mean, sum等
+针对向量
+```python
+x = torch.arange(0, 100, 10)
+```
+### 3.5.1. find min
+```python
+torch.min(x)
+# 或者
+x.min()
+```
+### 3.5.2. find max
+```python
+torch.max(x)
+# 或者
+x.max()
+```
+### 3.5.3. find mean
+mean不能处理int类型向量
+```python
+torch.mean(x.type(torch.float32))
+# 或者
+x.type(torch.float32).mean()
+```
+### 3.5.4. find the sum
+```python
+torch.sum(x), x.sum()
+```
+### 3.5.5. find the positional min and max
+```python
+# find min
+x.argmin()
+# result
+tensor(0)
+# find max
+x.argmax()
+# result
+tensor(9)
+```
+# 4.改变形状
+```python
+# create tensor
+x = torch.arange(1., 11.)
+# result
+tensor([1., 2., ... 10.])
+# shape
+x.shape
+# result
+torch.Size([10])
+```
+## 4.1. reshaping
+维度必须一致
+```python
+x.reshape(10,1)
+x.shape
+# result
+tensor([[1.],
+        [2.],
+        ...
+        [10.]]),
+torch.Size([10,1])       
+# another reshape
+x.reshape([5, 2])
+# result
+tensor([[1.],[2.],
+        ...
+        [1.],[10.]]),
+```
+## 4.2. view
+调整形状，共享相同内存的，改变z就会改变x，纯纯浅拷贝的感觉
+```python
+x = torch.arange(1., 10.)
+x, x.shape
+tensor([1., 2., ... , 9.])
+torch.Size(9)
+# result
+z = x.view(1, 9)
+z, z.shape
+# result
+tensor([[1., 2., ... , 9.]])
+torch.Size([1, 9])
+```
+## 4.2. stack
+把一堆向量堆成一个矩阵，dim是堆叠方向
+```python
+x_stacked = torch.stack([x, x, x, x], dim = 0)
+# result
+tensor([[1., 2., ... 8., 9.],
+        [1., 2., ... 8., 9.],
+        [1., 2., ... 8., 9.],
+        [1., 2., ... 8., 9.]])
+# dim=1的堆叠方式
+x_stacked = torch.stack([x, x, x, x], dim = 1)
+# result
+tensor([[1., 1., 1., 1.],
+        [2., 2., 2., 2.],
+        ...,
+        [9., 9., 9., 9.]])
+```
+## 4.3. squeezing and unsqueezing tensors.
+squeeze把一个多维的矩阵挤成一个向量，unsqueeze 增加维度
+```python
+x = torch.arange(1., 10.)
+z = x.view(1, 9)
+z, z.shape
+# result
+tensor([[1., 2., ... , 9.]])
+torch.Size([1, 9])
+# squeeze一下
+z.squeeze(), z.squeeze().shape
+# result
+tensor([1., 2., ... , 9.])
+torch.Size([9])
+# unsqueeze一下，dim=0
+z_unsqueezed = z.squeeze().unsqueeze(dim=0)
+# result
+tensor([[1., 2., ... , 9.]])
+# shape
+tensor([1, 9])
+# unsqueeze一下，dim=1
+z_unsqueezed = z.squeeze().unsqueeze(dim=1)
+# result
+tensor([[1.], 
+        [2.], 
+        ... , 
+        [9.]])
+# shape
+tensor([9, 1])
+```
+
