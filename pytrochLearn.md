@@ -1,48 +1,49 @@
 
 
-# 1. 环境配置  
+# 1. 基础
+## 1.1. 环境配置
 
-## 1.1 使用colab.research.google.com真的好用，赞！  
-## 1.2 ctrl+m m转换代码为文本  
-## 1.3  导包几件套  
+## 1.1.1 使用colab.research.google.com真的好用，赞！  
+## 1.1.2 ctrl+m m转换代码为文本  
+## 1.1.3  导包几件套  
 ```python
 import torch  
 import pandas as pd  
 import numpy as np  
 import matplotlib.pyplot as plt  
 ```
-# 2. 标量、向量、矩阵、张量  
+# 1.2. 标量、向量、矩阵、张量  
 
-## 2.1 标量，比如torch.tensor(2)  
-### 2.1.1 维度ndim  
+## 1.2.1 标量，比如torch.tensor(2)  
+### 1.2.1.1 维度ndim  
 ```python
 scalar = torch.tensor().ndim，标量没有维度  
 ```
-### 2.1.2 获取原本数值  
+### 1.2.1.2 获取原本数值  
 ```python
 torch.tensor().item()  
 ```
-## 2.2 向量（矢量）
+## 1.2.2 向量（矢量）
 ```python
 比如torch.tensor([7,7])  
 ```
-### 2.2.1 ndim  
+### 1.2.2.1 ndim  
 ndim为1
-### 2.2.2 shape
+### 1.2.2.2 shape
 shape为2，为向量里面的元素个数  
 
-## 2.3 矩阵Matrix
+## 1.2.3 矩阵Matrix
 ```python
 比如MATIX = torch.tensor([[7, 8]  
                         [9, 10]])
 ```
-### 2.3.1 MATIX.ndim 为2  
-### 2.3.2 MATIX[0]
+### 1.2.3.1 MATIX.ndim 为2  
+### 1.2.3.2 MATIX[0]
 torch.tensor([7, 8])  
-### 2.3.3 MATIX.shape 
+### 1.2.3.3 MATIX.shape 
 torch.Size([2, 2])  
 
-## 2.4 张量 tensor
+## 1.2.4 张量 tensor
 ```python
 TENSOR = torch.tensor(  
     [[[1, 2, 3],  
@@ -50,10 +51,10 @@ TENSOR = torch.tensor(
     [2, 4, 5]]]  
 )
 ```
-### 2.4.1 TENSOR.ndim = 3
-### 2.4.2 TENSOR.shape = torch.Size(1,3,3)
+### 1.2.4.1 TENSOR.ndim = 3
+### 1.2.4.2 TENSOR.shape = torch.Size(1,3,3)
 ![alt text](image.png)
-### 2.4.3 random tensors
+### 1.2.4.3 random tensors
 torch.rand()  
 对于图片来讲，可以表示为3个通道，每个通道为 
 
@@ -63,7 +64,7 @@ torch.tensor(size=(height, width))
 
 
 
-### 2.4.4 全部是0或者全部是1的张量   
+### 1.2.4.4 全部是0或者全部是1的张量   
 ```python
 zero = torch.zeros(size=(3, 4))  
 ```
@@ -75,8 +76,8 @@ ones = torch.ones(size(3, 4))
 ```python   
 ones.dtype = torch.float32
 ```
-# 3. 创建range
-## 3.1. troch.arange()  
+# 1.3. 创建range
+## 1.3.1. troch.arange()  
 torch.arange(start, end ,step)和原生range一样
 ```python
 one_to_four = torch.arange(0, 4)
@@ -90,7 +91,7 @@ torch.zeros_like(input=one_to_four)
 tensor([0, 0, 0, 0])
 ```
 
-## 3.2. 数据类型  
+## 1.3.2. 数据类型  
 常见的pytorch中的错误：  
 tensor类型错误，使用.type  
 tensor形状错误，使用.size()或.shape  
@@ -105,20 +106,20 @@ float_32_tensor = torch.tensor([3.0, 6.0, 9.0]，
 #改变数据类型
 float_16_tensor = float_32_tensor.type(torch.float16)                            
 ```
-### 3.2.1. dtype
+### 1.3.2.1. dtype
 默认为 torch.float32, 可以强制更改为torch.float16等
 .dtype来看数据类型
 
-### 3.2.2. device
+### 1.3.2.2. device
 device可以是cpu，也可以是cuda，默认是None
 ```python
 # 可以用
 tensor.device()获取
 ```
 
-## 3.3. 计算tensor
+## 1.3.3. 计算tensor
 
-### 3.3.1. addition
+### 1.3.3.1. addition
 创建一个tensor
 ```python
 tensor = torch.tensor([1, 2, 3])
@@ -134,14 +135,14 @@ tensor([11, 12, 13])
 
 ```
 
-### 3.3.2. subtraction
+### 1.3.3.2. subtraction
 ```python
 # 执行减标量运算
 tensor - 10
 # 结果为
 tensor([-9, -8, -7])
 ```
-### 3.3.3. multiplication(element-wise)元素乘法
+### 1.3.3.3. multiplication(element-wise)元素乘法
 ```python
 # 执行乘法
 tensor * 10
@@ -154,8 +155,8 @@ torch.mul(tensor, 10)
 tensor([10, 20, 30])
 ```
 
-### 3.3.4. 除法
-### 3.3.5. 矩阵乘法
+### 1.3.3.4. 除法
+### 1.3.3.5. 矩阵乘法
 ```python
 # 执行矩阵乘法运算
 torch.matmul(tensor, tenosr)
@@ -172,37 +173,37 @@ torch.mm(tensor, tensor)
 ```
 发现个很有意思的讲矩阵的网站http://matrixmultiplication.xyz/  
 
-## 3.4. 转置
+## 1.3.4. 转置
 tensor.T为tensor的转置  
-## 3.5. min, max, mean, sum等
+## 1.3.5. min, max, mean, sum等
 针对向量
 ```python
 x = torch.arange(0, 100, 10)
 ```
-### 3.5.1. find min
+### 1.3.5.1. find min
 ```python
 torch.min(x)
 # 或者
 x.min()
 ```
-### 3.5.2. find max
+### 1.3.5.2. find max
 ```python
 torch.max(x)
 # 或者
 x.max()
 ```
-### 3.5.3. find mean
+### 1.3.5.3. find mean
 mean不能处理int类型向量
 ```python
 torch.mean(x.type(torch.float32))
 # 或者
 x.type(torch.float32).mean()
 ```
-### 3.5.4. find the sum
+### 1.3.5.4. find the sum
 ```python
 torch.sum(x), x.sum()
 ```
-### 3.5.5. find the positional min and max
+### 1.3.5.5. find the positional min and max
 ```python
 # find min
 x.argmin()
@@ -213,7 +214,7 @@ x.argmax()
 # result
 tensor(9)
 ```
-# 4. 改变形状
+# 1.4. 改变形状
 ```python
 # create tensor
 x = torch.arange(1., 11.)
@@ -224,7 +225,7 @@ x.shape
 # result
 torch.Size([10])
 ```
-## 4.1. reshaping
+## 1.4.1. reshaping
 维度必须一致
 ```python
 x.reshape(10,1)
@@ -242,7 +243,7 @@ tensor([[1.],[2.],
         ...
         [1.],[10.]]),
 ```
-## 4.2. view
+## 1.4.2. view
 调整形状，共享相同内存的，改变z就会改变x，纯纯浅拷贝的感觉
 ```python
 x = torch.arange(1., 10.)
@@ -256,7 +257,7 @@ z, z.shape
 tensor([[1., 2., ... , 9.]])
 torch.Size([1, 9])
 ```
-## 4.2. stack
+## 1.4.2. stack
 把一堆向量堆成一个矩阵，dim是堆叠方向
 ```python
 x_stacked = torch.stack([x, x, x, x], dim = 0)
@@ -273,7 +274,7 @@ tensor([[1., 1., 1., 1.],
         ...,
         [9., 9., 9., 9.]])
 ```
-## 4.3. squeezing and unsqueezing tensors.
+## 1.4.3. squeezing and unsqueezing tensors.
 squeeze把一个多维的矩阵挤成一个向量，unsqueeze 增加维度
 ```python
 x = torch.arange(1., 10.)
@@ -303,7 +304,7 @@ tensor([[1.],
 # shape
 tensor([9, 1])
 ```
-## 4.4. permute
+## 1.4.4. permute
 permute的功能是交换维度，与view一样，改变里面数据会改变原来的数据。
 ```python
 x_orginal = torch.rand(size(224, 224, 3))
@@ -312,12 +313,12 @@ x_orginal = torch.rand(size(224, 224, 3))
 x_permuted = x_original.permute(2, 0, 1)
 # 这个permute代表轴从2->0, 0->1, 1->2, 轴从0开始算。
 ```
-## 4.5. 索引
+## 1.4.5. 索引
 跟numpy一样
 
-## 4.6. 跟numpy的转换
+## 1.4.6. 跟numpy的转换
 主要说一下数据类型，from_numpy()和numpy()的用法，如果直接转换，tensor的arange是32位，numpy的arange是64位，如果强制转换的话，就from_numpy().type('float32')
-### 4.6.1. numpy to tensor
+### 1.4.6.1. numpy to tensor
 ```python
 array = np.arange(1.0, 8.0)
 tensor = torch.from_numpy(array)
@@ -334,10 +335,10 @@ torch.arange(1.0, 8.0).dtype
 # result
 torch.float32
 ```
-### 4.6.2 tensor to numpy
+### 1.4.6.2 tensor to numpy
 同上，其实没啥
 
-## 4.7. reproducbility(从随即中剔除随机)
+## 1.4.7. reproducbility(从随即中剔除随机)
 即选种子
 ```python
 # 纯随机
@@ -354,8 +355,8 @@ tensor([[True, True, True, True],
         [True, True, True, True],
         [True, True, True, True]])
 ```
-# 5. GPU加速
-## 5.1. 使用GPU
+# 1.5. GPU加速
+## 1.5.1. 使用GPU
 ```python
 # 查询GPU命令
 !nividia-smi
@@ -366,7 +367,39 @@ device = "cuda"
 # 查询GPU设备数量，离谱，有一个就不错了
 torch.cuda.device_count()
 ```
-## 5.2. 在GPU上使用tensor
+## 1.5.2. 在GPU上使用tensor
+```python
+# 默认创建tensor，在cpu上
+tensor = torch.tensor([1, 2, 3])
+print(tensor.device)
+# result
+"cpu"
+# move tensor to GPU, 因为之前device已经设置为cuda了
+tensor_on_gpu = tensor.to(device)
+tensor_on_gpu 
+# result
+tensor([1, 2, 3], device='cuda:0')
+# numpy只在cpu工作，把向量移动回cpu，然后变成numpy
+tensor_back_on_cpu = tensor_on_gpu.cpu()
+numpy_back = tensor_back_on_cpu.numpy()
+numpy_back
+# result
+array([1, 2, 3])
+```
+# 2.开始训练模型
+总共分为6步，准备数据，建立模型，拟合模型，预测与评估，保存模型，使用模型
+```python
+import torch
+from torch import nn
+# nn 包含所有的建立神经网络块的信息
+import matpotlib.pyplot as plt
+
+# 检查版本
+torch.__version__
+```
+# 2.1 准备数据 data (prepare and load)
+从线性拟合开始学
+
 ```python
 
 ```
