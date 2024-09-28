@@ -337,5 +337,36 @@ torch.float32
 ### 4.6.2 tensor to numpy
 同上，其实没啥
 
-# 5. reproducbility(从随即中剔除随机)
+## 4.7. reproducbility(从随即中剔除随机)
+即选种子
+```python
+# 纯随机
+torch.rand(3,3)
+# 使用种子
+RANDOM_SEED = 42
+torch.manual_seed(RANDOM)
+random_tensor_C = torch.rand(3, 4)
+random_tensor_D = torch.rand(3, 4)
+# 这样两个张量就完全一致
+print(random_tensor_C == random_tensor_D )
+# result
+tensor([[True, True, True, True],
+        [True, True, True, True],
+        [True, True, True, True]])
+```
+# 5. GPU加速
+## 5.1. 使用GPU
+```python
+# 查询GPU命令
+!nividia-smi
+# 检查GPU是否可用
+torch.cuda.is_available()
+# 设置使用GPU
+device = "cuda"
+# 查询GPU设备数量，离谱，有一个就不错了
+torch.cuda.device_count()
+```
+## 5.2. 在GPU上使用tensor
+```python
 
+```
