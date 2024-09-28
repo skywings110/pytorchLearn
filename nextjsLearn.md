@@ -1,5 +1,7 @@
 # 1. 服务器组件和浏览器组件
-
+默认server，在next的后端执行，是一种完成的html代码，发给前端，js代码少，引擎优化比较好，web爬虫可以看到完整页面
+use client才会在浏览器执行，如果用客户端代码，那么html是空的，全是js实现的，用户交互就需要客户端组件
+尽量保留server组件，性能较好，只有必须用client才用client
 # 2. 路由
 ## 2.1. 显示
 app下面/about的page.jsx文件才算数  
@@ -13,8 +15,14 @@ app下面/about的page.jsx文件才算数
 import Link from next/link
 Link标签不会找server端处理，直接就显示，实现客户端路由。  
 客户端路由是指在浏览器中，通过JavaScript来管理和控制页面的加载和渲染，而不是依赖于服务器端的页面跳转。当用户点击Link组件时，实际上是在客户端触发了一个路由的变更事件，而不是向服务器发送请求来获取新的HTML页面。
-## 2.4.可以进行外包组件
+## 2.4. 可以进行外包组件
 在app/下面可以新建component/然后放里面页面需要的component
+## 2.5. 获取当期url路径名字符串
+```jsx
+import { usePathname } from 'next/navigation' 
+// path就是url路径
+const path = usePathname()
+```
 
 # 3. css
 ## 3.1. icon.jpg
@@ -34,5 +42,16 @@ Link标签不会找server端处理，直接就显示，实现客户端路由。
 layout的东西可以改变下面的所有page，通常做最上面的导航栏比较好
 
 # 5. 组件
-## 5.2. Image
+## 5.1. Image
 默认loading = "lazy"，格式是webp，比png更有效，像页面logo这种没有内容转移或者闪烁的就优先加载。这种在Image 标签里加priority
+
+# 6. 动画
+## 6.1. setInterval
+做图片间隔变化，使用useEffect
+
+# 7. js基础
+## 7.1. startWith
+js判断是否以某个字符串开头，判断状态
+```jsx
+<Link href="/meals" className={path.startsWith('/meals') ? classes.active : undefined}>
+```
