@@ -213,7 +213,7 @@ x.argmax()
 # result
 tensor(9)
 ```
-# 4.改变形状
+# 4. 改变形状
 ```python
 # create tensor
 x = torch.arange(1., 11.)
@@ -303,4 +303,39 @@ tensor([[1.],
 # shape
 tensor([9, 1])
 ```
+## 4.4. permute
+permute的功能是交换维度，与view一样，改变里面数据会改变原来的数据。
+```python
+x_orginal = torch.rand(size(224, 224, 3))
+# x_orginal是一个三维的张量
+# 进行permute变换
+x_permuted = x_original.permute(2, 0, 1)
+# 这个permute代表轴从2->0, 0->1, 1->2, 轴从0开始算。
+```
+## 4.5. 索引
+跟numpy一样
+
+## 4.6. 跟numpy的转换
+主要说一下数据类型，from_numpy()和numpy()的用法，如果直接转换，tensor的arange是32位，numpy的arange是64位，如果强制转换的话，就from_numpy().type('float32')
+### 4.6.1. numpy to tensor
+```python
+array = np.arange(1.0, 8.0)
+tensor = torch.from_numpy(array)
+# 数据类型
+array.dtype
+# result
+dtype('float64')
+# tensor.dtype
+tensor.dtype
+# result
+dtype('torch.float64')
+# 如果是直接用torch.arange的数据，就是float32
+torch.arange(1.0, 8.0).dtype
+# result
+torch.float32
+```
+### 4.6.2 tensor to numpy
+同上，其实没啥
+
+# 5. reproducbility(从随即中剔除随机)
 
