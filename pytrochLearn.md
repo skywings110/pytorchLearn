@@ -401,5 +401,50 @@ torch.__version__
 从线性拟合开始学
 
 ```python
+# create *known* parameters
+weight = 0.7
+bias = 0.3
 
+# create
+start = 0
+end = 1
+step = 0.02
+X = troch.arange(start, end ,step).unsqueeze(dim=1)
+y = weight * X + bias
+
+X[:10], y[:10]
+# result
+tensor([[0.00],
+        [0.02],
+        ...,
+        [0.18]]),
+tensor([[0.300],
+        [0.314],
+        [0.328],
+        ...,
+        [0.426]])
+
+```
+## 2.1.1 切分数据
+将数据分为训练集和测试集
+training set, validation set, test set
+切80%用于训练集
+```python
+train_split = int(0.8 * len(X))
+# result
+40
+# 最简单的切片式分割
+X_train, y_train = X[:train_split], y[train_split:]
+X_test, y_test = X[:train_split:], y[train_split:]
+```
+## 2.1.2 可视化数据
+最简单的
+```python
+plt.figure(figsize=(10, 7))
+# plot training data in blue
+plt.scatter(train_data, train_labels, c="b", s=4)
+plt.scatter(test_data, test_labels, c="g", s=4)
+# s值散点图大小size
+# show the legend
+plt.legend(prop={"size": 14})
 ```
