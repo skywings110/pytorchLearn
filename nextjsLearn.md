@@ -68,3 +68,6 @@ js判断是否以某个字符串开头，判断状态
 ```jsx
 <Link href="/meals" className={path.startsWith('/meals') ? classes.active : undefined}>
 ```
+
+# 8. SQLite Database
+略
