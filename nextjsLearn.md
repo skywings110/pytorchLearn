@@ -23,7 +23,18 @@ import { usePathname } from 'next/navigation'
 // path就是url路径
 const path = usePathname()
 ```
-
+## 2.6. 动态段路由值
+`${}`
+```python
+# 图片
+import logoImg from "./../logo.png"
+# 这种情况下next可以直接查找高度和宽度
+src = {logoImg}
+# src={路径}时必须有宽和高，所以加fill意味着直接填充，不知道的图直接fill是比较好的处理方案。
+```
+提取所有属性用...比如<MealItem {...meal}/>
+meal是一个键值对
+function MealItem({title, slug, image, summary})这种就可以自动匹配上
 # 3. css
 ## 3.1. icon.jpg
 更改网页上方的图标
@@ -36,6 +47,8 @@ const path = usePathname()
   margin: 0;
   padding: 0;
 }
+### 3.2.2
+
 
 # 4. page and layout
 ## 4.1. layout
