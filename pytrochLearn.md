@@ -397,7 +397,7 @@ import matpotlib.pyplot as plt
 # 检查版本
 torch.__version__
 ```
-# 2.1 准备数据 data (prepare and load)
+## 2.1 准备数据 data (prepare and load)
 从线性拟合开始学
 
 ```python
@@ -425,7 +425,7 @@ tensor([[0.300],
         [0.426]])
 
 ```
-## 2.1.1 切分数据
+### 2.1.1 切分数据
 将数据分为训练集和测试集
 training set, validation set, test set
 切80%用于训练集
@@ -437,7 +437,7 @@ train_split = int(0.8 * len(X))
 X_train, y_train = X[:train_split], y[train_split:]
 X_test, y_test = X[:train_split:], y[train_split:]
 ```
-## 2.1.2 可视化数据
+### 2.1.2 可视化数据
 最简单的
 ```python
 plt.figure(figsize=(10, 7))
@@ -447,4 +447,54 @@ plt.scatter(test_data, test_labels, c="g", s=4)
 # s值散点图大小size
 # show the legend
 plt.legend(prop={"size": 14})
+```
+## 2.2 build model
+requeires_grad = True意味着要跟踪梯度，实现梯度下降，反向传播  
+torch.nn 包含最基本的计算单元  
+torch.nn.Parameter - 模型需要的参数  
+torch.nn.Module 人工网络基类，应该有forward()方法
+torch.optim 优化器，帮助梯度优化  
+torch.utils.data.Dataset和torch.utils.data.DataLoader与数据导入有关，复杂数据导入需要，现在还用不到
+```python
+# Create linear regression model class
+from torch import nn
+class LinerRegressionModel(nn.Module):
+        # nn.Module是所有网络的基类，这里的初值设置不一定是randn(1)，也可以指定初值，比如0
+        def __init__(self):
+                self.weight = nn.Parameter(troch.randn(1,
+                requires_grad = True,
+                dtype = torch.float))
+                
+                self.bias =  nn.Parameter(troch.randn(1,
+                requires_grad = True,
+                dtype = torch.float))
+                
+        def forward(self, x: troch.Tensor) -> troch.Tensor:
+                return self.weights * x + self.bias
+
+# 为了保持一致所以先设定随机种子
+torch.manual_seed(42)
+# 创建模型实例
+model_0 = LinearRegressionModel()
+# 查看模型参数
+list(model_0.parameters)
+# result
+[Parameter containing:
+tensor(0.3367, requires_grad=True)]
+[Parameter containing:
+tensor(0.1288, requires_grad=True)]
+# 也可以使用model_0.state_dict()查看
+OrderDict((('weight', tensor([0.3367])), 'bias', tensor([0.1288])))
+```
+## 2.3 预测模型predict
+```python
+with torch.inference_model():
+        y_preds = model_0(X_test)
+# with 是封装了try...catch...finally的用法，这里用了with的话不会显示grad_fn，没有梯度功能，这个叫做推理模式，这样会提高速度，禁用了那些没用的梯度跟踪
+y_preds
+# 显示y_preds结果，然后可以作图显示
+
+# 使用no_grad模式也可以，但是不如推理模式inference_mode受欢迎，即
+with torch.no_grad():
+        y_preds = model_0(X_test)
 ```
