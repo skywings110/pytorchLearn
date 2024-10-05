@@ -54,6 +54,8 @@ function MealItem({title, slug, image, summary})这种就可以自动匹配上
 ## 4.1. layout
 layout的东西可以改变下面的所有page，通常做最上面的导航栏比较好
 
+## 4.2. 增加loading page
+
 # 5. 组件
 ## 5.1. Image
 默认loading = "lazy"，格式是webp，比png更有效，像页面logo这种没有内容转移或者闪烁的就优先加载。这种在Image 标签里加priority
@@ -71,3 +73,16 @@ js判断是否以某个字符串开头，判断状态
 
 # 8. SQLite Database
 略
+
+# 9. fetch data
+# 9.1. 原生用法
+```jsx
+// 原生用法
+useEffect(() => {
+  fetch()
+}, []);
+```
+# 9.2. server端调用
+因为不写server端的查询，所以db.prepare(查询语句)这块略去
+服务器组件可以转换为异步函数
+在服务器组件里使用await 调取函数值，即const xx = await getxx()就可以直接用
