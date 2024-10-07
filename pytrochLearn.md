@@ -397,7 +397,7 @@ import matpotlib.pyplot as plt
 # 检查版本
 torch.__version__
 ```
-# 2.1 准备数据 data (prepare and load)
+## 2.1 准备数据 data (prepare and load)
 从线性拟合开始学
 
 ```python
@@ -425,7 +425,7 @@ tensor([[0.300],
         [0.426]])
 
 ```
-## 2.1.1 切分数据
+### 2.1.1 切分数据
 将数据分为训练集和测试集
 training set, validation set, test set
 切80%用于训练集
@@ -437,7 +437,7 @@ train_split = int(0.8 * len(X))
 X_train, y_train = X[:train_split], y[train_split:]
 X_test, y_test = X[:train_split:], y[train_split:]
 ```
-## 2.1.2 可视化数据
+### 2.1.2 可视化数据
 最简单的
 ```python
 plt.figure(figsize=(10, 7))
@@ -447,4 +447,135 @@ plt.scatter(test_data, test_labels, c="g", s=4)
 # s值散点图大小size
 # show the legend
 plt.legend(prop={"size": 14})
+```
+## 2.2 build model
+requeires_grad = True意味着要跟踪梯度，实现梯度下降，反向传播  
+torch.nn 包含最基本的计算单元  
+torch.nn.Parameter - 模型需要的参数  
+torch.nn.Module 人工网络基类，应该有forward()方法
+torch.optim 优化器，帮助梯度优化  
+torch.utils.data.Dataset和torch.utils.data.DataLoader与数据导入有关，复杂数据导入需要，现在还用不到
+```python
+# Create linear regression model class
+from torch import nn
+class LinerRegressionModel(nn.Module):
+        # nn.Module是所有网络的基类，这里的初值设置不一定是randn(1)，也可以指定初值，比如0
+        def __init__(self):
+               super(LinerRegressionModel, self).__init__()
+                self.weight = nn.Parameter(troch.randn(1,
+                requires_grad = True,
+                dtype = torch.float))
+                
+                self.bias =  nn.Parameter(troch.randn(1,
+                requires_grad = True,
+                dtype = torch.float))
+                
+        def forward(self, x: troch.Tensor) -> troch.Tensor:
+                return self.weights * x + self.bias
+
+# 为了保持一致所以先设定随机种子
+torch.manual_seed(42)
+# 创建模型实例
+model_0 = LinearRegressionModel()
+# 查看模型参数
+list(model_0.parameters)
+# result
+[Parameter containing:
+tensor(0.3367, requires_grad=True)]
+[Parameter containing:
+tensor(0.1288, requires_grad=True)]
+# 也可以使用model_0.state_dict()查看
+OrderDict((('weight', tensor([0.3367])), 'bias', tensor([0.1288])))
+```
+## 2.3 train model训练
+### 2.3.1 设置loss和optimizer
+首先设置损失函数loss function  
+nn.MSELoss 均方误差
+nn.L1Loss 误差绝对值和，简称MAE  
+线性回归这里直接简单粗暴，使用绝对值误差和就完事了  
+optimizer优化器也有各种函数，要挑选的，这里使用SGD(stochastic gradient descnet)，参数是lr学习率  
+最后要进行迭代循环，training loop
+```python
+# 设置loss 函数
+loss_fn = nn.L1Loss()
+# 设置optimizer
+optimizer = torch.optim.SGD(params = model_0.parameters(),
+lr=0.01)
+```
+### 2.3.2 进行loop
+0. loop through the data
+1. Forward pass to make predictions on data
+模型前传，会执行forward命令，正向传播
+2. calculate the loss
+计算损失值
+3. optimizer zero grad
+优化器梯度归零，当使用优化器step时，梯度会随时间推移而累积
+4. loss backward
+反向传播loss，根据loss执行反向传播，根据requires_grad=true，计算每个参数
+5. optimizer step
+课程不涉及反向传播，和优化的数学原理，要想知道数学原理就还得自己去看别的视频
+
+test部分
+#### 训练模式和评估模式
+使用eval()关闭训练模式，
+
+turns off different settings in the model not needed for evaluation/testing (dropout/batch norm layers)在模型的评估（或测试）阶段，会关闭那些对于评估或测试过程不需要的设置，特别是针对Dropout层和BatchNorm层的行为进行调整。
+
+<!-- Dropout层：在训练过程中，Dropout层通过随机丢弃一部分神经元的输出来防止模型过拟合。但在评估或测试阶段，我们不再需要这种正则化效果，因为此时我们想要模型充分利用所有可用的信息来做出最准确的预测。因此，在评估模式下，Dropout层会被“关闭”，即所有神经元的输出都会被保留。
+BatchNorm层：BatchNorm层在训练过程中会根据每个小批量的数据来计算均值和方差，并进行归一化处理。但在评估或测试阶段，我们希望模型能够使用在整个训练集上计算的均值和方差来进行归一化处理，以确保模型在不同数据集上的表现一致。因此，在评估模式下，BatchNorm层会使用这些全局的均值和方差，而不是每个小批量的均值和方差。
+通过关闭这些在评估或测试阶段不需要的设置，我们可以确保模型在评估或测试时能够表现出最佳的性能，同时避免由于训练特有的正则化效果而导致的预测偏差。这是深度学习模型在实际应用中的一个重要步骤，有助于提高模型的准确性和可靠性。
+参考：
+在PyTorch中，model.eval() 和 model.train() 是用来控制模型在不同阶段的行为的方法。它们主要影响那些在训练和评估（或推理）阶段表现不同的层，比如批归一化（BatchNorm）层和丢弃（Dropout）层。下面是两个方法的主要区别：
+
+model.train()
+用途：将模型设置为训练模式。
+行为：
+对于 Dropout 层：在训练模式下，Dropout 层会按照设定的概率随机“丢弃”（即设置为零）一部分输入，以防止过拟合。
+对于 BatchNorm 层：在训练模式下，BatchNorm 层会根据当前批次的数据计算均值和方差，并使用这些值进行归一化。同时，它还会累积整个训练集的均值和方差，以便在评估时使用。
+梯度：在训练模式下，默认情况下会计算梯度，这是为了能够通过反向传播更新模型参数。
+适用场景：当你准备开始训练模型或者正在进行训练时，应该使用 model.train()。
+model.eval()
+用途：将模型设置为评估模式。
+行为：
+对于 Dropout 层：在评估模式下，Dropout 层不会丢弃任何输入，而是直接传递所有输入，这样可以确保在评估或推理时得到稳定的输出。
+对于 BatchNorm 层：在评估模式下，BatchNorm 层会使用在整个训练过程中累积的均值和方差来进行归一化，而不是当前批次的数据。
+梯度：在评估模式下，默认情况下不会计算梯度，因为评估或推理阶段不需要更新模型参数。
+适用场景：当你准备对模型进行评估或进行推理（预测）时，应该使用 model.eval()。 -->
+
+但实际上训练模式的loss是看train的比较，评估模式loss是看test的比较，比较的数据不一样，我理解test_pred如果不挂在评估模式，模型就会进行一次计算，就是有问题的，至于使用inference_mode，就单纯是为了快速出结果。
+```python
+# 0. loop through the data
+for epoch in range(epochs):
+        # set to train mode
+        # 模型参数做了一系列的幕后设置，可以跟踪坡度
+        model_0.train() 
+        # 1. forward pass
+        y_pred = model_0(X_train)
+        # 2. calculate the loss， 训练模式loss
+        loss = loss_fn(y_pred, y_train)
+        # 3. potimizer zero grad
+        optimizer.zero_grad()
+        # 4. perform backpropagation on the loss
+        loss.backward()
+        # 5. step the optimizer
+        optimizer.step()
+        # testing，将推理模式变成评估模式
+        model_0.eval()
+        with torch.inference_mode():
+                test_pred = model_0(X_test)
+                # 评估模式loss
+                test_loss = loss_fn(test_pred, y_test)
+```
+inference_mode()和no_grad()
+## 2.4 预测模型predict
+```python
+with torch.inference_model():
+        y_preds = model_0(X_test)
+# with 是封装了try...catch...finally的用法，这里用了with的话不会显示grad_fn，没有梯度功能，这个叫做推理模式，这样会提高速度，禁用了那些没用的梯度跟踪
+y_preds
+# 显示y_preds结果，然后可以作图显示
+
+# 使用no_grad模式也可以，但是不如推理模式inference_mode受欢迎，即
+with torch.no_grad():
+        y_preds = model_0(X_test)
 ```
