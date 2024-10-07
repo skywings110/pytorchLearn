@@ -1,126 +1,168 @@
-
-
 # 1. 基础
+
 ## 1.1. 环境配置
 
-## 1.1.1 使用colab.research.google.com真的好用，赞！  
-## 1.1.2 ctrl+m m转换代码为文本  
-## 1.1.3  导包几件套  
-```python
-import torch  
-import pandas as pd  
-import numpy as np  
-import matplotlib.pyplot as plt  
-```
-# 1.2. 标量、向量、矩阵、张量  
+## 1.1.1 使用 colab.research.google.com 真的好用，赞！
 
-## 1.2.1 标量，比如torch.tensor(2)  
-### 1.2.1.1 维度ndim  
+## 1.1.2 ctrl+m m 转换代码为文本
+
+## 1.1.3 导包几件套
+
 ```python
-scalar = torch.tensor().ndim，标量没有维度  
+import torch
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 ```
-### 1.2.1.2 获取原本数值  
+
+# 1.2. 标量、向量、矩阵、张量
+
+## 1.2.1 标量，比如 torch.tensor(2)
+
+### 1.2.1.1 维度 ndim
+
 ```python
-torch.tensor().item()  
+scalar = torch.tensor().ndim，标量没有维度
 ```
+
+### 1.2.1.2 获取原本数值
+
+```python
+torch.tensor().item()
+```
+
 ## 1.2.2 向量（矢量）
-```python
-比如torch.tensor([7,7])  
-```
-### 1.2.2.1 ndim  
-ndim为1
-### 1.2.2.2 shape
-shape为2，为向量里面的元素个数  
 
-## 1.2.3 矩阵Matrix
 ```python
-比如MATIX = torch.tensor([[7, 8]  
+比如torch.tensor([7,7])
+```
+
+### 1.2.2.1 ndim
+
+ndim 为 1
+
+### 1.2.2.2 shape
+
+shape 为 2，为向量里面的元素个数
+
+## 1.2.3 矩阵 Matrix
+
+```python
+比如MATIX = torch.tensor([[7, 8]
                         [9, 10]])
 ```
-### 1.2.3.1 MATIX.ndim 为2  
+
+### 1.2.3.1 MATIX.ndim 为 2
+
 ### 1.2.3.2 MATIX[0]
-torch.tensor([7, 8])  
-### 1.2.3.3 MATIX.shape 
-torch.Size([2, 2])  
+
+torch.tensor([7, 8])
+
+### 1.2.3.3 MATIX.shape
+
+torch.Size([2, 2])
 
 ## 1.2.4 张量 tensor
+
 ```python
-TENSOR = torch.tensor(  
-    [[[1, 2, 3],  
-    [3, 6, 9],  
-    [2, 4, 5]]]  
+TENSOR = torch.tensor(
+    [[[1, 2, 3],
+    [3, 6, 9],
+    [2, 4, 5]]]
 )
 ```
+
 ### 1.2.4.1 TENSOR.ndim = 3
+
 ### 1.2.4.2 TENSOR.shape = torch.Size(1,3,3)
+
 ![alt text](image.png)
+
 ### 1.2.4.3 random tensors
+
 torch.rand()  
-对于图片来讲，可以表示为3个通道，每个通道为 
+对于图片来讲，可以表示为 3 个通道，每个通道为
 
 torch.tensor([height, width])  
 torch.tensor(height, width)  
 torch.tensor(size=(height, width))
 
+### 1.2.4.4 全部是 0 或者全部是 1 的张量
 
-
-### 1.2.4.4 全部是0或者全部是1的张量   
 ```python
-zero = torch.zeros(size=(3, 4))  
+zero = torch.zeros(size=(3, 4))
 ```
-清除一个张量直接tensor*zero就把原来的tensor清除了，就都是0了  
+
+清除一个张量直接 tensor\*zero 就把原来的 tensor 清除了，就都是 0 了
+
 ```python
 ones = torch.ones(size(3, 4))
 ```
-数据类型dtype，
-```python   
+
+数据类型 dtype，
+
+```python
 ones.dtype = torch.float32
 ```
-# 1.3. 创建range
-## 1.3.1. troch.arange()  
-torch.arange(start, end ,step)和原生range一样
+
+# 1.3. 创建 range
+
+## 1.3.1. troch.arange()
+
+torch.arange(start, end ,step)和原生 range 一样
+
 ```python
 one_to_four = torch.arange(0, 4)
 # 会得到
 tensor([0, 1, 2, 3])
 ```
-形成一个维度一样的全0矩阵
+
+形成一个维度一样的全 0 矩阵
+
 ```python
 torch.zeros_like(input=one_to_four)
 # 会得到
 tensor([0, 0, 0, 0])
 ```
 
-## 1.3.2. 数据类型  
-常见的pytorch中的错误：  
-tensor类型错误，使用.type  
-tensor形状错误，使用.size()或.shape  
-tensor没在正确的device上，使用.device    
+## 1.3.2. 数据类型
 
-创建张量预选有几个选项比较重要， 分别是dtype, device, requires_grade
+常见的 pytorch 中的错误：  
+tensor 类型错误，使用.type  
+tensor 形状错误，使用.size()或.shape  
+tensor 没在正确的 device 上，使用.device
+
+创建张量预选有几个选项比较重要， 分别是 dtype, device, requires_grade
+
 ```python
 float_32_tensor = torch.tensor([3.0, 6.0, 9.0]，
                                 dtype=None,
                                 device=None,
                                 requires_grad = False)
 #改变数据类型
-float_16_tensor = float_32_tensor.type(torch.float16)                            
+float_16_tensor = float_32_tensor.type(torch.float16)
 ```
+
 ### 1.3.2.1. dtype
-默认为 torch.float32, 可以强制更改为torch.float16等
-.dtype来看数据类型
+
+默认为 torch.float32, 可以强制更改为 torch.float16 等
+.dtype 来看数据类型
 
 ### 1.3.2.2. device
-device可以是cpu，也可以是cuda，默认是None
+
+device 可以是 cpu，也可以是 cuda，默认是 None
+
 ```python
 # 可以用
 tensor.device()获取
 ```
 
-## 1.3.3. 计算tensor
+## 1.3.3. 计算 tensor
 
 ### 1.3.3.1. addition
-创建一个tensor
+
+创建一个 tensor
+
 ```python
 tensor = torch.tensor([1, 2, 3])
 # 执行加标量运算
@@ -136,13 +178,16 @@ tensor([11, 12, 13])
 ```
 
 ### 1.3.3.2. subtraction
+
 ```python
 # 执行减标量运算
 tensor - 10
 # 结果为
 tensor([-9, -8, -7])
 ```
+
 ### 1.3.3.3. multiplication(element-wise)元素乘法
+
 ```python
 # 执行乘法
 tensor * 10
@@ -156,7 +201,9 @@ tensor([10, 20, 30])
 ```
 
 ### 1.3.3.4. 除法
+
 ### 1.3.3.5. 矩阵乘法
+
 ```python
 # 执行矩阵乘法运算
 torch.matmul(tensor, tenosr)
@@ -171,39 +218,55 @@ torch.mm(tensor, tensor)
 # 结果为
 14
 ```
-发现个很有意思的讲矩阵的网站http://matrixmultiplication.xyz/  
+
+发现个很有意思的讲矩阵的网站http://matrixmultiplication.xyz/
 
 ## 1.3.4. 转置
-tensor.T为tensor的转置  
-## 1.3.5. min, max, mean, sum等
+
+tensor.T 为 tensor 的转置
+
+## 1.3.5. min, max, mean, sum 等
+
 针对向量
+
 ```python
 x = torch.arange(0, 100, 10)
 ```
+
 ### 1.3.5.1. find min
+
 ```python
 torch.min(x)
 # 或者
 x.min()
 ```
+
 ### 1.3.5.2. find max
+
 ```python
 torch.max(x)
 # 或者
 x.max()
 ```
+
 ### 1.3.5.3. find mean
-mean不能处理int类型向量
+
+mean 不能处理 int 类型向量
+
 ```python
 torch.mean(x.type(torch.float32))
 # 或者
 x.type(torch.float32).mean()
 ```
+
 ### 1.3.5.4. find the sum
+
 ```python
 torch.sum(x), x.sum()
 ```
+
 ### 1.3.5.5. find the positional min and max
+
 ```python
 # find min
 x.argmin()
@@ -214,7 +277,9 @@ x.argmax()
 # result
 tensor(9)
 ```
+
 # 1.4. 改变形状
+
 ```python
 # create tensor
 x = torch.arange(1., 11.)
@@ -225,8 +290,11 @@ x.shape
 # result
 torch.Size([10])
 ```
+
 ## 1.4.1. reshaping
+
 维度必须一致
+
 ```python
 x.reshape(10,1)
 x.shape
@@ -235,7 +303,7 @@ tensor([[1.],
         [2.],
         ...
         [10.]]),
-torch.Size([10,1])       
+torch.Size([10,1])
 # another reshape
 x.reshape([5, 2])
 # result
@@ -243,8 +311,11 @@ tensor([[1.],[2.],
         ...
         [1.],[10.]]),
 ```
+
 ## 1.4.2. view
-调整形状，共享相同内存的，改变z就会改变x，纯纯浅拷贝的感觉
+
+调整形状，共享相同内存的，改变 z 就会改变 x，纯纯浅拷贝的感觉
+
 ```python
 x = torch.arange(1., 10.)
 x, x.shape
@@ -257,8 +328,11 @@ z, z.shape
 tensor([[1., 2., ... , 9.]])
 torch.Size([1, 9])
 ```
+
 ## 1.4.2. stack
-把一堆向量堆成一个矩阵，dim是堆叠方向
+
+把一堆向量堆成一个矩阵，dim 是堆叠方向
+
 ```python
 x_stacked = torch.stack([x, x, x, x], dim = 0)
 # result
@@ -274,8 +348,11 @@ tensor([[1., 1., 1., 1.],
         ...,
         [9., 9., 9., 9.]])
 ```
+
 ## 1.4.3. squeezing and unsqueezing tensors.
-squeeze把一个多维的矩阵挤成一个向量，unsqueeze 增加维度
+
+squeeze 把一个多维的矩阵挤成一个向量，unsqueeze 增加维度
+
 ```python
 x = torch.arange(1., 10.)
 z = x.view(1, 9)
@@ -297,15 +374,18 @@ tensor([1, 9])
 # unsqueeze一下，dim=1
 z_unsqueezed = z.squeeze().unsqueeze(dim=1)
 # result
-tensor([[1.], 
-        [2.], 
-        ... , 
+tensor([[1.],
+        [2.],
+        ... ,
         [9.]])
 # shape
 tensor([9, 1])
 ```
+
 ## 1.4.4. permute
-permute的功能是交换维度，与view一样，改变里面数据会改变原来的数据。
+
+permute 的功能是交换维度，与 view 一样，改变里面数据会改变原来的数据。
+
 ```python
 x_orginal = torch.rand(size(224, 224, 3))
 # x_orginal是一个三维的张量
@@ -313,12 +393,17 @@ x_orginal = torch.rand(size(224, 224, 3))
 x_permuted = x_original.permute(2, 0, 1)
 # 这个permute代表轴从2->0, 0->1, 1->2, 轴从0开始算。
 ```
-## 1.4.5. 索引
-跟numpy一样
 
-## 1.4.6. 跟numpy的转换
-主要说一下数据类型，from_numpy()和numpy()的用法，如果直接转换，tensor的arange是32位，numpy的arange是64位，如果强制转换的话，就from_numpy().type('float32')
+## 1.4.5. 索引
+
+跟 numpy 一样
+
+## 1.4.6. 跟 numpy 的转换
+
+主要说一下数据类型，from_numpy()和 numpy()的用法，如果直接转换，tensor 的 arange 是 32 位，numpy 的 arange 是 64 位，如果强制转换的话，就 from_numpy().type('float32')
+
 ### 1.4.6.1. numpy to tensor
+
 ```python
 array = np.arange(1.0, 8.0)
 tensor = torch.from_numpy(array)
@@ -335,11 +420,15 @@ torch.arange(1.0, 8.0).dtype
 # result
 torch.float32
 ```
+
 ### 1.4.6.2 tensor to numpy
+
 同上，其实没啥
 
 ## 1.4.7. reproducbility(从随即中剔除随机)
+
 即选种子
+
 ```python
 # 纯随机
 torch.rand(3,3)
@@ -355,8 +444,11 @@ tensor([[True, True, True, True],
         [True, True, True, True],
         [True, True, True, True]])
 ```
-# 1.5. GPU加速
-## 1.5.1. 使用GPU
+
+# 1.5. GPU 加速
+
+## 1.5.1. 使用 GPU
+
 ```python
 # 查询GPU命令
 !nividia-smi
@@ -367,7 +459,9 @@ device = "cuda"
 # 查询GPU设备数量，离谱，有一个就不错了
 torch.cuda.device_count()
 ```
-## 1.5.2. 在GPU上使用tensor
+
+## 1.5.2. 在 GPU 上使用 tensor
+
 ```python
 # 默认创建tensor，在cpu上
 tensor = torch.tensor([1, 2, 3])
@@ -376,7 +470,7 @@ print(tensor.device)
 "cpu"
 # move tensor to GPU, 因为之前device已经设置为cuda了
 tensor_on_gpu = tensor.to(device)
-tensor_on_gpu 
+tensor_on_gpu
 # result
 tensor([1, 2, 3], device='cuda:0')
 # numpy只在cpu工作，把向量移动回cpu，然后变成numpy
@@ -386,8 +480,11 @@ numpy_back
 # result
 array([1, 2, 3])
 ```
+
 # 2.开始训练模型
-总共分为6步，准备数据，建立模型，拟合模型，预测与评估，保存模型，使用模型
+
+总共分为 6 步，准备数据，建立模型，拟合模型，预测与评估，保存模型，使用模型
+
 ```python
 import torch
 from torch import nn
@@ -397,7 +494,9 @@ import matpotlib.pyplot as plt
 # 检查版本
 torch.__version__
 ```
+
 ## 2.1 准备数据 data (prepare and load)
+
 从线性拟合开始学
 
 ```python
@@ -425,10 +524,13 @@ tensor([[0.300],
         [0.426]])
 
 ```
+
 ### 2.1.1 切分数据
+
 将数据分为训练集和测试集
 training set, validation set, test set
-切80%用于训练集
+切 80%用于训练集
+
 ```python
 train_split = int(0.8 * len(X))
 # result
@@ -437,8 +539,11 @@ train_split = int(0.8 * len(X))
 X_train, y_train = X[:train_split], y[train_split:]
 X_test, y_test = X[:train_split:], y[train_split:]
 ```
+
 ### 2.1.2 可视化数据
+
 最简单的
+
 ```python
 plt.figure(figsize=(10, 7))
 # plot training data in blue
@@ -448,13 +553,16 @@ plt.scatter(test_data, test_labels, c="g", s=4)
 # show the legend
 plt.legend(prop={"size": 14})
 ```
+
 ## 2.2 build model
-requeires_grad = True意味着要跟踪梯度，实现梯度下降，反向传播  
+
+requeires_grad = True 意味着要跟踪梯度，实现梯度下降，反向传播  
 torch.nn 包含最基本的计算单元  
 torch.nn.Parameter - 模型需要的参数  
-torch.nn.Module 人工网络基类，应该有forward()方法
+torch.nn.Module 人工网络基类，应该有 forward()方法
 torch.optim 优化器，帮助梯度优化  
-torch.utils.data.Dataset和torch.utils.data.DataLoader与数据导入有关，复杂数据导入需要，现在还用不到
+torch.utils.data.Dataset 和 torch.utils.data.DataLoader 与数据导入有关，复杂数据导入需要，现在还用不到
+
 ```python
 # Create linear regression model class
 from torch import nn
@@ -465,11 +573,11 @@ class LinerRegressionModel(nn.Module):
                 self.weight = nn.Parameter(troch.randn(1,
                 requires_grad = True,
                 dtype = torch.float))
-                
+
                 self.bias =  nn.Parameter(troch.randn(1,
                 requires_grad = True,
                 dtype = torch.float))
-                
+
         def forward(self, x: troch.Tensor) -> troch.Tensor:
                 return self.weights * x + self.bias
 
@@ -487,14 +595,18 @@ tensor(0.1288, requires_grad=True)]
 # 也可以使用model_0.state_dict()查看
 OrderDict((('weight', tensor([0.3367])), 'bias', tensor([0.1288])))
 ```
-## 2.3 train model训练
-### 2.3.1 设置loss和optimizer
-首先设置损失函数loss function  
+
+## 2.3 train model 训练
+
+### 2.3.1 设置 loss 和 optimizer
+
+首先设置损失函数 loss function  
 nn.MSELoss 均方误差
-nn.L1Loss 误差绝对值和，简称MAE  
+nn.L1Loss 误差绝对值和，简称 MAE  
 线性回归这里直接简单粗暴，使用绝对值误差和就完事了  
-optimizer优化器也有各种函数，要挑选的，这里使用SGD(stochastic gradient descnet)，参数是lr学习率  
+optimizer 优化器也有各种函数，要挑选的，这里使用 SGD(stochastic gradient descnet)，参数是 lr 学习率  
 最后要进行迭代循环，training loop
+
 ```python
 # 设置loss 函数
 loss_fn = nn.L1Loss()
@@ -502,24 +614,28 @@ loss_fn = nn.L1Loss()
 optimizer = torch.optim.SGD(params = model_0.parameters(),
 lr=0.01)
 ```
-### 2.3.2 进行loop
+
+### 2.3.2 进行 loop
+
 0. loop through the data
 1. Forward pass to make predictions on data
-模型前传，会执行forward命令，正向传播
+   模型前传，会执行 forward 命令，正向传播
 2. calculate the loss
-计算损失值
+   计算损失值
 3. optimizer zero grad
-优化器梯度归零，当使用优化器step时，梯度会随时间推移而累积
+   优化器梯度归零，当使用优化器 step 时，梯度会随时间推移而累积
 4. loss backward
-反向传播loss，根据loss执行反向传播，根据requires_grad=true，计算每个参数
+   反向传播 loss，根据 loss 执行反向传播，根据 requires_grad=true，计算每个参数
 5. optimizer step
-课程不涉及反向传播，和优化的数学原理，要想知道数学原理就还得自己去看别的视频
+   课程不涉及反向传播，和优化的数学原理，要想知道数学原理就还得自己去看别的视频
 
-test部分
+test 部分
+
 #### 训练模式和评估模式
-使用eval()关闭训练模式，
 
-turns off different settings in the model not needed for evaluation/testing (dropout/batch norm layers)在模型的评估（或测试）阶段，会关闭那些对于评估或测试过程不需要的设置，特别是针对Dropout层和BatchNorm层的行为进行调整。
+使用 eval()关闭训练模式，
+
+turns off different settings in the model not needed for evaluation/testing (dropout/batch norm layers)在模型的评估（或测试）阶段，会关闭那些对于评估或测试过程不需要的设置，特别是针对 Dropout 层和 BatchNorm 层的行为进行调整。
 
 <!-- Dropout层：在训练过程中，Dropout层通过随机丢弃一部分神经元的输出来防止模型过拟合。但在评估或测试阶段，我们不再需要这种正则化效果，因为此时我们想要模型充分利用所有可用的信息来做出最准确的预测。因此，在评估模式下，Dropout层会被“关闭”，即所有神经元的输出都会被保留。
 BatchNorm层：BatchNorm层在训练过程中会根据每个小批量的数据来计算均值和方差，并进行归一化处理。但在评估或测试阶段，我们希望模型能够使用在整个训练集上计算的均值和方差来进行归一化处理，以确保模型在不同数据集上的表现一致。因此，在评估模式下，BatchNorm层会使用这些全局的均值和方差，而不是每个小批量的均值和方差。
@@ -542,13 +658,14 @@ model.eval()
 梯度：在评估模式下，默认情况下不会计算梯度，因为评估或推理阶段不需要更新模型参数。
 适用场景：当你准备对模型进行评估或进行推理（预测）时，应该使用 model.eval()。 -->
 
-但实际上训练模式的loss是看train的比较，评估模式loss是看test的比较，比较的数据不一样，我理解test_pred如果不挂在评估模式，模型就会进行一次计算，就是有问题的，至于使用inference_mode，就单纯是为了快速出结果。
+但实际上训练模式的 loss 是看 train 的比较，评估模式 loss 是看 test 的比较，比较的数据不一样，我理解 test_pred 如果不挂在评估模式，模型就会进行一次计算，就是有问题的，至于使用 inference_mode，就单纯是为了快速出结果。
+
 ```python
 # 0. loop through the data
 for epoch in range(epochs):
         # set to train mode
         # 模型参数做了一系列的幕后设置，可以跟踪坡度
-        model_0.train() 
+        model_0.train()
         # 1. forward pass
         y_pred = model_0(X_train)
         # 2. calculate the loss， 训练模式loss
@@ -566,8 +683,11 @@ for epoch in range(epochs):
                 # 评估模式loss
                 test_loss = loss_fn(test_pred, y_test)
 ```
-inference_mode()和no_grad()
-## 2.4 预测模型predict
+
+inference_mode()和 no_grad()
+
+## 2.4 预测模型 predict
+
 ```python
 with torch.inference_model():
         y_preds = model_0(X_test)
@@ -579,14 +699,19 @@ y_preds
 with torch.no_grad():
         y_preds = model_0(X_test)
 ```
+
 ## 2.5. 保存和载入模型
-三种方法  
+
+三种方法
+
 1. torch.save()
 2. torch.load()
-3. torch.nn.Module.load_state_dict()，保存state_dict
-### 2.5.1 python目录新标准pathlib
+3. torch.nn.Module.load_state_dict()，保存 state_dict
+
+### 2.5.1 python 目录新标准 pathlib
 
 ### 2.5.2 保存
+
 ```python
 from pathlib import Path
 # 开始保存
@@ -603,3 +728,125 @@ torch.save(obj = model_0.state_dict(), f=MODEL_SAVE_PATH)
 loaded_model_0 = LinearRegressionModel()
 # 加载训练好的权重
 loaded_model_0.load_state_dict(torch.load(f=MODEL_SAVE_PATH))
+```
+
+## 2.6. 复习
+
+```python
+# 2.6.1 prepare
+# import pytorch
+import torch
+from torch import nn
+
+# check pytorch version
+torch.__version__
+
+# setup device agnostic code
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using device: {device}")
+
+# 2.6.2 data
+# create some data using the linear regression formular of y = weight * x + bias
+weight = 0.7
+bias = 0.3
+
+# create range values
+start = 0
+end = 1
+step = 0.02
+
+# Create X and y
+X = torch.arange(start, end, step).unsqueeze(dim = 1)
+y = weight * X + bias
+
+# split data
+train_split = int(0.8*len(X))
+X_train, y_train = X[:train_split], y[:train_split]
+X_test, y_test = X[train_split:], y[train_split:]
+
+# 2.6.2 building model
+# 2.6.2.1 create linear model
+class LinearRegressionModelV2(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.linear_layer = nn.Linear(in_features = 1, out_features = 1)
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.linear_layer(x)
+
+# set the manual seed
+torch.manual_seed(42)
+model_1 = LinearRegressionModelV2()
+print(model_1.state_dict())
+# 此时model_1 的初始权重是随机的，并且与model_0 的初始权重是不一样的，就是随机的过程不同
+
+# 2.6.2.2 模型移动到GPU
+# check device, result is cpu
+next(model_1.parameters()).device
+
+# transfer to GPU
+model_1.to(device)
+next(model_1.parameters()).device
+
+# put data on GPU
+X_train = X_train.to(device)
+X_test = X_test.to(device)
+y_train = y_train.to(device)
+y_test = y_test.to(device)
+
+# 2.6.3 training
+# setup loss function and optimizer
+loss_fn = nn.L1Loss()
+optimizer = torch.optim.SGD(params = model_1.parameters(), lr = 0.01)
+
+# train loop
+torch.manual_seed(42)
+
+epochs = 200
+
+for epoch in range(epochs):
+    model_1.train()
+
+    # 1. forward pass
+    y_pred = model_1(X_train)
+
+    # 2. calculate loss
+    loss = loss_fn(y_pred, y_train)
+
+    # 3. optimizer zero grad
+    optimizer.zero_grad()
+
+    # 4. perform backpropagation on the loss
+    loss.backward()
+
+    # 5. step the optimizer
+    optimizer.step()
+
+    # evaluation
+    model_1.eval()
+    with torch.inference_mode():
+        test_pred = model_1(X_test)
+        test_loss = loss_fn(test_pred, y_test)
+    
+    # print out
+    if epoch % 10 == 0:
+        print(f"Epoch: {epoch} | Loss: {loss} | Test loss: {test_loss}")
+    
+# 2.6.4 plot
+# get predictions
+model_1.eval()
+with torch.inference_mode():
+    y_preds = model_1(X_test)
+# plot_predictions函数省略了
+plot_predictions(train_data = X_test.cpu(), predictions = y_preds.cpu())
+
+# 2.6.5 save and load
+from pathlib import Path
+
+MODEL_PATH = Path("models")
+MODEL_PATH.mkdir(parents=True, exist_ok=True)
+
+MODEL_NAME = "01_pytorch_workflow_model_1.pth"
+MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
+
+torch.save(obj = model_1.state_dict(), f=MODEL_SAVE_PATH)
+```
