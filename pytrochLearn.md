@@ -579,3 +579,27 @@ y_preds
 with torch.no_grad():
         y_preds = model_0(X_test)
 ```
+## 2.5. 保存和载入模型
+三种方法  
+1. torch.save()
+2. torch.load()
+3. torch.nn.Module.load_state_dict()，保存state_dict
+### 2.5.1 python目录新标准pathlib
+
+### 2.5.2 保存
+```python
+from pathlib import Path
+# 开始保存
+MODEL_PATH = Path("models")
+MODEL_PATH.mkdir(parents=True, exist_ok=True)
+
+MODEL_NAME = "model_0.pth"
+MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
+
+torch.save(obj = model_0.state_dict(), f=MODEL_SAVE_PATH)
+
+# 开始读取
+# 首先创建一个模型，这个时候里面的模型的权重是随机的
+loaded_model_0 = LinearRegressionModel()
+# 加载训练好的权重
+loaded_model_0.load_state_dict(torch.load(f=MODEL_SAVE_PATH))
