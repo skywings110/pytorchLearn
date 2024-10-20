@@ -861,4 +861,25 @@ plt.legend()
 ```
 
 # 3. 分类
-## 3.1. 
+## 3.1. 准备数据
+```python
+import sklearn
+from sklearn.datasets import make_circles
+
+n_samples = 1000
+
+X, y = make_circles(n_samples,
+                    noise=0.03,
+                    random_state=42)
+# 每个X有 2 个特征
+import pandas as pd
+circle = pd.DataFrame({
+    "X0": X[:, 0],
+    "X1": X[:, 1],
+    "label": y
+})
+```
+ ![alt text](image-2.png)
+ 显示一下数据
+ ![alt text](image-3.png)
+ 这次分类的目标是把两个圆圈数据分开，y是的结果是第一个圈还是第二个圈
