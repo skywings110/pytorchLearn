@@ -481,7 +481,7 @@ numpy_back
 array([1, 2, 3])
 ```
 
-# 2.开始训练模型
+# 2. 开始训练模型
 
 总共分为 6 步，准备数据，建立模型，拟合模型，预测与评估，保存模型，使用模型
 
@@ -637,6 +637,7 @@ test 部分
 
 turns off different settings in the model not needed for evaluation/testing (dropout/batch norm layers)在模型的评估（或测试）阶段，会关闭那些对于评估或测试过程不需要的设置，特别是针对 Dropout 层和 BatchNorm 层的行为进行调整。
 
+with torch.inference_mode()指的是梯度跟踪不需要推理，只训练
 <!-- Dropout层：在训练过程中，Dropout层通过随机丢弃一部分神经元的输出来防止模型过拟合。但在评估或测试阶段，我们不再需要这种正则化效果，因为此时我们想要模型充分利用所有可用的信息来做出最准确的预测。因此，在评估模式下，Dropout层会被“关闭”，即所有神经元的输出都会被保留。
 BatchNorm层：BatchNorm层在训练过程中会根据每个小批量的数据来计算均值和方差，并进行归一化处理。但在评估或测试阶段，我们希望模型能够使用在整个训练集上计算的均值和方差来进行归一化处理，以确保模型在不同数据集上的表现一致。因此，在评估模式下，BatchNorm层会使用这些全局的均值和方差，而不是每个小批量的均值和方差。
 通过关闭这些在评估或测试阶段不需要的设置，我们可以确保模型在评估或测试时能够表现出最佳的性能，同时避免由于训练特有的正则化效果而导致的预测偏差。这是深度学习模型在实际应用中的一个重要步骤，有助于提高模型的准确性和可靠性。
@@ -849,4 +850,15 @@ MODEL_NAME = "01_pytorch_workflow_model_1.pth"
 MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
 
 torch.save(obj = model_1.state_dict(), f=MODEL_SAVE_PATH)
+
+# 2.6.6 plot loss
+plt.plot(epoch_count, np.array(torch.tensor(loss_values).numpy()), label = "Train loss")
+plt.plot(epoch_count, test_loss_values, label="Test loss")
+plt.title("Training and test loss curves")
+plt.ylabel("Loss")
+plt.xlabel("Epochs")
+plt.legend()
 ```
+
+# 3. 分类
+## 3.1. 
