@@ -883,3 +883,17 @@ circle = pd.DataFrame({
  显示一下数据
  ![alt text](image-3.png)
  这次分类的目标是把两个圆圈数据分开，y是的结果是第一个圈还是第二个圈
+
+```python
+import matplotlib.pyplot as plt
+plt.scatter(x=X[:, 0], y=X[:, 1], c=y, cmap=plt.cm.RdYlBu)
+import matplotlib.pyplot as plt
+
+plt.scatter(x=X[:, 0], y=X[:, 1], c=y, cmap=plt.cm.RdYlBu)
+### 1.1 check input and output shapes
+X.shape, y.shape
+X
+X_sample = X[0]
+y_sample = y[0]
+X_sample, y_sample
+```
