@@ -896,4 +896,16 @@ X
 X_sample = X[0]
 y_sample = y[0]
 X_sample, y_sample
+
+import torch
+torch.__version__
+
+X=torch.from_numpy(X)
+X.dtype
+y=torch.from_numpy(y).type(torch.float)
+y.dtype
+# Split data into training and test sets
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
