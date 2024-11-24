@@ -976,7 +976,7 @@ def accuary_fn(y_true, y_pred):
     return accfor the loss function we're going to use `torch.nn.BCEWithLogitsLoss()`
 ```
 
-## 3.3 train model
+## 3.3 train model 训练模型
 
 1. Forward pass
 2. Calculate the loss
@@ -984,4 +984,22 @@ def accuary_fn(y_true, y_pred):
 4. Loss backward
 5. Optimizer step
 
-### 3.3.1.
+### 3.3.1. going from raw logits
+our model outputs going to be raw logits.
+We can convert these **logits** into prediction probabilities by passing them to some form of activation function.
+
+View the first 5 outputs of the forward pass on the test data
+```python
+model_0.eval()
+with torch.inference_mode():
+    y_logits = model_0(X_test.to(device, torch.float))[:5]
+y_logits
+```
+Use the sigmoid activation function on our model logits to turn them into prediction probabilities
+```python
+y_pred_probs = torch.sigmoid(y_logits)
+torch.round(y_pred_probs)
+# 总结一下
+y_pred_labels = torch.round(torch.sigmoid(model_0(X_test.to(device, torch.float))))
+```
+
