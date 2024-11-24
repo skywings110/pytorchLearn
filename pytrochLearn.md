@@ -890,7 +890,9 @@ plt.scatter(x=X[:, 0], y=X[:, 1], c=y, cmap=plt.cm.RdYlBu)
 import matplotlib.pyplot as plt
 
 plt.scatter(x=X[:, 0], y=X[:, 1], c=y, cmap=plt.cm.RdYlBu)
-### 1.1 check input and output shapes
+```
+### 3.1.1 check input and output shapes
+```python
 X.shape, y.shape
 X
 X_sample = X[0]
@@ -909,3 +911,68 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 ```
+## 3.2 建立模型 Budilding model 
+### 3.2.1 build class
+```python
+import torch
+from torch import nn
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+device
+
+class CircleModelV0(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layer_1 = nn.Linear(in_features=2, out_features=5)
+        self.layer_2 = nn.Linear(in_features=5, out_features=1) 
+    def forward(self ,x):
+        return self.layer_2(self.layer_1(x))
+
+
+# 等价于 
+# class CircleModelV0(nn.Module):
+#     def __init__(self):
+#         super().__init__()
+#         self.two_linear_layers = nn.Sequential(nn.Linear(in_features=2, out_features=5), nn.Linear(in_features=5, out_features=1))
+#     def forward(self ,x):
+#         return self.two_linear_layers(x)
+
+model_0 = CircleModelV0().to(device)
+model_0
+# 看一下模型在GPU上
+next(model_0.parameters()).device
+
+# CircleModelV0 等价于
+model_0= nn.Sequential(
+    nn.Linear(in_features=2, out_features=5),
+    nn.Linear(in_features=5, out_features=1),
+).to(device)
+model_0
+model_0.state_dict()
+with torch.inference_mode():
+    untrained_preds = model_0(X_test.to(device, torch.float))
+untrained_preds, X_test
+X_train.to(device)
+
+
+```
+
+## 3.2.2 Setup loss function and optimizer
+交叉熵损失函数（cross-entropy loss function）
+for regression, use MAE or MSE
+for classification, use BinaryCrossEntropyLoss or CrossEntropyLoss
+for optimizer, use SGD or Adam
+
+Setup the loss funtion
+```python
+loss_fn = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.SGD(model_0.parameters(), lr=0.01)
+```
+Calculate accuracy - out of 100 examples, what percent does our model get right?
+```python
+def accuary_fn(y_true, y_pred):
+    correct = torch.eq(y_true, y_pred).sum().item()
+    acc = correct / len(y_true) * 100
+    return accfor the loss function we're going to use `torch.nn.BCEWithLogitsLoss()`
+```
+
