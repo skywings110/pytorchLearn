@@ -976,3 +976,12 @@ def accuary_fn(y_true, y_pred):
     return accfor the loss function we're going to use `torch.nn.BCEWithLogitsLoss()`
 ```
 
+## 3.3 train model
+
+1. Forward pass
+2. Calculate the loss
+3. Optimizer zero grad
+4. Loss backward
+5. Optimizer step
+
+### 3.3.1.
