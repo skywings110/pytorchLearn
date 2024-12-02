@@ -1001,5 +1001,60 @@ y_pred_probs = torch.sigmoid(y_logits)
 torch.round(y_pred_probs)
 # 总结一下
 y_pred_labels = torch.round(torch.sigmoid(model_0(X_test.to(device, torch.float))))
-```
 
+# 检查相等check for equality
+print(torch.eq(y_pred.squeeze(), y_pred_labels.squeeze()))
+
+# get rid of extra dimension 去掉多余维度
+y_preds.squeeze()
+```
+### 3.3.2 building a train and testing loop
+```python
+torch.manual_seed(42)
+torch.cuda.manual_seed(42)
+
+epochs = 100
+
+X_train, y_train = X_train.to(device), y_train.to(device)
+X_test, y_test = X_test.to(device), y_test.to(device)
+
+for epoch in range(epochs):
+    ### Training
+    model_0.train()  
+
+    # 1. Forward pass
+    y_logits = model_0(X_train).squeeze()
+    y_pred = torch.round(torch.sigmoid(y_logits))
+
+    # 2. Calculate the loss/accuracy
+    #  nn.BCELoss expects prediction probability as input
+    # loss = loss_fn(torch.sigmoid(y_logits), y_train)
+    # nn.BCEWithLogitsLoss expects logits as input
+    loss = loss_fn(y_logits, y_train)
+
+    acc = accuary_fn(y_true=y_train, y_pred=y_pred)
+
+    # 3. Optimizer zero grad
+    optimizer.zero_grad()
+
+    # 4. Loss backward
+    loss.backward()
+
+    # 5. Optimizer step
+    optimizer.step()
+
+    # Testing
+    model_0.eval()
+    with torch.inference_mode():
+        # 1. Forward pass
+        test_logits = model_0(X_test).squeeze()
+        test_pred = torch.round(torch.sigmoid(test_logits))
+
+        # 2. Calculate loss/acc
+        test_loss = loss_fn(test_logits, y_test)
+        test_acc = accuary_fn(y_true=y_test, y_pred=test_pred)
+    
+    # Print out what's happening
+    if epoch % 10 == 0:
+        print(f"Epoch: {epoch} | Loss: {loss:.5f}, Acc: {acc:.2f}% | Test loss: {test_loss:.5f}, Test acc: {test_acc:.2f}%"))
+```
