@@ -1,12 +1,26 @@
 # 决策树
-## 1. 关键问题
+决策树分为两种，一种是分类树，一种是回归树
+# 1. 决策树
+## 1.1 关键问题
 关键的两个问题
 1. 如何从数据中找出最佳节点和最佳分支
 2. 如何让决策树停止生长，防止过拟合
 
-## 2. 衡量模型好坏的指标被称作不纯度Criterion，有两个指标衡量
+## 1.2. 衡量模型好坏的指标被称作不纯度Criterion，有两个指标衡量
 1. 输入"entropy"，使用信息熵（Entropy）
 2. 输入"gini"，使用基尼系数（GiniImpurity）
 
-## 3. 决策树的流程
+## 1.3. 决策树的流程
 ![alt text](image-2.png)
+
+# 2.回归树
+## 2.1 重要参数，属性和接口
+### 2.1.1 criterion
+1. 用来计算不纯度的函数，默认是“mse”，即均方误差（MSE）
+2. mae 使用绝对平均误差
+3. friedman_mse 使用friedman_mse
+
+默认loss使用的是MSE，但是由于实际上优化需要，所以sklearn计算使用-MSE，即neg_mean_squared_error
+### 2.2.2 接口score
+返回的是R^2
+![alt text](image-3.png)

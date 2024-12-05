@@ -1058,3 +1058,10 @@ for epoch in range(epochs):
     if epoch % 10 == 0:
         print(f"Epoch: {epoch} | Loss: {loss:.5f}, Acc: {acc:.2f}% | Test loss: {test_loss:.5f}, Test acc: {test_acc:.2f}%"))
 ```
+## 3.4 效果不好提升模型的方法
+
+1. Add more layers - give the model more chances to learn about patterns in the data
+2. Add more hidden units - go from 5 hidden units to 10 hidden units
+3. Fit for longer
+4. Changing the activation function
+5. Change the learning rate
