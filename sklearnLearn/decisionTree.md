@@ -21,6 +21,32 @@
 3. friedman_mse 使用friedman_mse
 
 默认loss使用的是MSE，但是由于实际上优化需要，所以sklearn计算使用-MSE，即neg_mean_squared_error
-### 2.2.2 接口score
+### 2.1.2 接口score
 返回的是R^2
 ![alt text](image-3.png)
+
+## 2.2 实例
+```python
+# 实例化
+regressor = DecisionTreeRegressor(random_state = 0)
+# 交叉验证
+cross_val_score(regressor, X, y, cv=10
+# 默认返回的值是R^2，示例中返回的是MSE
+，scoring='neg_mean_squared_error')
+
+
+import numpy as np
+from sklearn.tree import DecisionTreeRegressor 
+import matplotlib.pyplot as plt
+
+# 生成数据
+rng=np.random.Randomstate(1)
+x=np.sort(5*rng.rand(80,1),axis=0)
+y=np.sin(x).ravel()
+y[::5]+=3 *(0.5-rng.rand(16))
+#np.random.rand（数组结构），生成随机数组的函数
+#了解降维函数ravel()的用法
+np.random.random((2,1))
+np.random.random((2,1)).ravel()
+np.random.random((2.1)).ravel()shape
+```
