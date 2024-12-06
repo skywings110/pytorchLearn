@@ -13,6 +13,10 @@
 ## 1.3. 决策树的流程
 ![alt text](image-2.png)
 
+## 1.4. 总结
+![alt text](image-6.png)
+
+
 # 2.回归树
 ## 2.1 重要参数，属性和接口
 ### 2.1.1 criterion

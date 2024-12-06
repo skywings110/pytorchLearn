@@ -9,3 +9,5 @@ cross_val_score()
 ## 随机数
 np.random.RandomState和seed都可以设置随机数，但seed是固定随机数，RandomState是随机随机数。个人理解差别不大，就是seed设置了，后面所有的都得用seed的，RandomState每一截都可以设置不同的种子。
 ![alt text](image-5.png)
+# 机器学习经验
+![alt text](image-7.png)
