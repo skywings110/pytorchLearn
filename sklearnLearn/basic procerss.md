@@ -16,6 +16,11 @@ cross_val_score()
 结果：
 ![alt text](image-9.png)
 
+# 1.4 集成算法
+集成学习（ensemblelearning）是时下非常流行的机器学习算法，它本身不是一个单独的机器学习算法，而是通
+过在数据上构建多个模型，集成所有模型的建模结果。基本上所有的机器学习领域都可以看到集成学习的身影
+![alt text](image-10.png)
+
 # 2 np的知识
 ## 2.2 随机数
 np.random.RandomState和seed都可以设置随机数，但seed是固定随机数，RandomState是随机随机数。个人理解差别不大，就是seed设置了，后面所有的都得用seed的，RandomState每一截都可以设置不同的种子。
@@ -54,3 +59,7 @@ data['sex'] = data['sex'].map({'female':0, 'male':1})
 ### 3.3.2 把索引变有序
 df.reset_index(drop=True, inplace=True)或
 df.index = range(len(df))
+
+# 4 matplotlib的知识
+## 4.1 jupyter notebook中画图
+通过%matplotlib inline 设置matplotlib环境
