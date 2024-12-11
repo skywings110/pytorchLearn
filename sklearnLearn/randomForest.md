@@ -44,3 +44,7 @@ plt.plot(range(1,11), clf_s, label='DecisionTree')
 plt.legend()
 plt.show()
 ```
+
+# 跟上补充
+红色为单个数，蓝色为随机森林，当单个数的准确率低于50%时，随机森林会更差，随机森林的每个分类树至少要有50%的准确率，这样随机森林才能用。
+![](image-12.png)
