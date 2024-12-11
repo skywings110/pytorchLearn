@@ -22,13 +22,23 @@ cross_val_score()
 ![alt text](image-10.png)
 
 # 2 np的知识
-## 2.2 随机数
+## 2.1 随机数
 np.random.RandomState和seed都可以设置随机数，但seed是固定随机数，RandomState是随机随机数。个人理解差别不大，就是seed设置了，后面所有的都得用seed的，RandomState每一截都可以设置不同的种子。
 ![alt text](image-5.png)
-## 2.3 增加维度
+
+## 2.2 增加维度
 ndarray = np.array([1,2,3])
 ndarray.reshape(-1, 1)或者
 ndarray[:, np.newaxis]
+
+## 2.3 补np的知识
+```python
+import numpy as np
+from scipy.special import comb
+
+# comb(a, b)指排列组合里C(a, b)，即从a里选b个数的组合数
+np.array([comb(25,i)*(0.2**i)*((1-0.2)**(25-i)) for i in range(13,26)]).sum()
+```
 
 # 3 pd的知识
 ## 3.1 查找
