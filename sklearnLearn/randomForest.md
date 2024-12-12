@@ -1,4 +1,6 @@
 # 随机森林
+
+# 1 决策树
 ## 1.1 重要参数
 ### 1.1.1 决策树参数
 和决策数一样的参数
@@ -50,7 +52,7 @@ plt.plot(range(1,11), clf_s, label='DecisionTree')
 plt.legend()
 plt.show()
 ```
-<<<<<<< randomForest
+
 ## 1.2 随机森林的原理
 ### 1.2.1 随机森林的本质是袋装集成算法，当XX棵树以上的树判断失误的时候，随机森林就会判断失误
 
@@ -75,9 +77,47 @@ rfc.feature_importances_
 rfc.apply(Xtest)
 # 返回测试集预测的标签
 rfc.predict(Xtest)
-=======
 
-# 跟上补充
+
+## 1.5 bag补充
 红色为单个数，蓝色为随机森林，当单个数的准确率低于50%时，随机森林会更差，随机森林的每个分类树至少要有50%的准确率，这样随机森林才能用。
 ![](image-12.png)
->>>>>>> main
+
+# 2 回归树
+## 2.1 重要参数
+1. criterion: 
+mse, friendman_mse, mae
+回归树接口score返回的是R^2
+![alt text](image-13.png)
+找打分表
+![alt text](image-15.png)
+## 2.2 回归森林接口
+1.没有predict_proba() 回归不存在在哪个里面的概率
+
+## 2.3 回归森林的例子
+```python
+regressor = RandomForestRegressor(
+    n_estimators=100, # 树的数量
+    , random_state=0, # 随机数种子
+    )
+cross_val_score(regressor, 
+                boston.data, 
+                boston.target,
+                cv=10,
+                scoring='neg_mean_squared_error', # 默认为R^2
+                )
+```
+
+# 3 随机森林填补缺失值
+使用sklearn.impute.SimpleImputer
+
+```python
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_boston 
+from sklearn.impute import SimpleImputer
+from sklearn.ensemble import RandomForestRegressor 
+
+
+```
