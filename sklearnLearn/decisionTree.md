@@ -48,10 +48,11 @@ rng=np.random.Randomstate(1)
 x=np.sort(5*rng.rand(80,1),axis=0)
 y=np.sin(x).ravel()
 y[::5]+=3 *(0.5-rng.rand(16))
-#np.random.rand（数组结构），生成随机数组的函数
-#了解降维函数ravel()的用法
+# np.random.rand（数组结构），生成随机数组的函数
+# 了解降维函数ravel()的用法
 np.random.random((2,1))
 np.random.random((2,1)).ravel()
 np.random.random((2.1)).ravel()shape
-```
 
+
+```

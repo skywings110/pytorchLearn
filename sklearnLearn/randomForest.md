@@ -118,6 +118,19 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import load_boston 
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import RandomForestRegressor 
-
-
 ```
+
+# 3.1 例子是波士顿房价数据集  
+共506个样本，13个特征  
+![alt text](image-16.png)  
+首先确认比例，假设为50%
+![alt text](image-17.png)  
+随机删除值  
+![alt text](image-18.png)
+![alt text](image-19.png)
+![alt text](image-20.png)
+![alt text](image-21.png)  
+使用均值填补  
+![alt text](image-22.png)  
+训练+导出
+#训练fit+导出predict >>> fit transform
