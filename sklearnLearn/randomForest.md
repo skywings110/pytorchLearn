@@ -134,3 +134,14 @@ from sklearn.ensemble import RandomForestRegressor
 ![alt text](image-22.png)  
 训练+导出
 #训练fit+导出predict >>> fit transform
+
+使用0进行填补
+![alt text](image-23.png)
+missing_values是指里面要补的缺失值
+strategy是指填补的方式，有mean，most_frequent，constant, constant指用常数填补
+fill_value是指用什么值来填补，当strategy为constant的时候，必须写上
+X_missing_0就是训练加导出的数据
+![alt text](image-24.png)
+可以看到已经填上了
+
+思路的话是先用0填上，然后把其他特征值按照缺失值由少到多来随机森林算上

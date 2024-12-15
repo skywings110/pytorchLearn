@@ -31,7 +31,7 @@ ndarray = np.array([1,2,3])
 ndarray.reshape(-1, 1)或者
 ndarray[:, np.newaxis]
 
-## 2.3 补np的知识
+## 2.3 排列组合-组合数
 ```python
 import numpy as np
 from scipy.special import comb
@@ -39,6 +39,9 @@ from scipy.special import comb
 # comb(a, b)指排列组合里C(a, b)，即从a里选b个数的组合数
 np.array([comb(25,i)*(0.2**i)*((1-0.2)**(25-i)) for i in range(13,26)]).sum()
 ```
+
+## 2.4 排序
+np.argsort() 返回索引排序
 
 # 3 pd的知识
 ## 3.1 查找
@@ -50,6 +53,10 @@ df['col'].unique()
 ### 3.1.3 从DataFrame中找到要训练和测试的X
 X = df.iloc[:, df.columns != 'target']
 y = df.iloc[:, df.columns == 'target']
+### 3.1.4 维度
+axis = 0 沿行，axis = 1 按列
+### 3.1.5 找去除第n列的其他的数据组成pd
+df.iloc[:, df.columns != n] 或 df.drop('n', axis=1)
 
 ## 3.2 删除
 ### 3.2.1 删除列
@@ -69,6 +76,15 @@ data['sex'] = data['sex'].map({'female':0, 'male':1})
 ### 3.3.2 把索引变有序
 df.reset_index(drop=True, inplace=True)或
 df.index = range(len(df))
+
+## 3.4 增加
+### 3.4.1 复制
+df_copy = df.copy(), 默认是deep=True，是深拷贝
+
+### 3.4.2 添加一列
+df.concat([df1, df2], axis=1)
+
+
 
 # 4 matplotlib的知识
 ## 4.1 jupyter notebook中画图
