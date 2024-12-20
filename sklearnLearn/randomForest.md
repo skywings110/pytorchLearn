@@ -122,20 +122,21 @@ from sklearn.ensemble import RandomForestRegressor
 
 # 3.1 例子是波士顿房价数据集  
 共506个样本，13个特征  
-![alt text](image-16.png)  
-首先确认比例，假设为50%
+![alt text](image-16.png)    
+首先确认比例，假设为50%  
 ![alt text](image-17.png)  
 随机删除值  
 ![alt text](image-18.png)
 ![alt text](image-19.png)
 ![alt text](image-20.png)
-![alt text](image-21.png)  
-使用均值填补  
-![alt text](image-22.png)  
-训练+导出
-#训练fit+导出predict >>> fit transform
 
-使用0进行填补
+1. 使用均值填补  
+![alt text](image-21.png)  
+![alt text](image-22.png)  
+训练+导出  
+#训练fit+导出predict >>> fit transform  
+
+2. 使用0进行填补  
 ![alt text](image-23.png)
 missing_values是指里面要补的缺失值
 strategy是指填补的方式，有mean，most_frequent，constant, constant指用常数填补
@@ -144,4 +145,8 @@ X_missing_0就是训练加导出的数据
 ![alt text](image-24.png)
 可以看到已经填上了
 
-思路的话是先用0填上，然后把其他特征值按照缺失值由少到多来随机森林算上
+3. 使用随机森林机型填补  
+思路的话是先用0填上，然后把其他特征值按照缺失值由少到多来随机森林算上  
+X_missing_reg 是 X_missing的copy()    
+首先看一下每个特征缺失值的个数，总共是13列  
+![alt text](image-27.png)

@@ -57,6 +57,8 @@ y = df.iloc[:, df.columns == 'target']
 axis = 0 沿行，axis = 1 按列
 ### 3.1.5 找去除第n列的其他的数据组成pd
 df.iloc[:, df.columns != n] 或 df.drop('n', axis=1)
+### 3.1.6 选择非空的列
+df[df.notnull()]
 
 ## 3.2 删除
 ### 3.2.1 删除列
