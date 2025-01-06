@@ -4,18 +4,37 @@ Client -> Server : request
 activate Server
 note left 
 单个查询流程
-参数: 
+基本信息
 string code, 
-string startDate, endDate, 
+string startDate, 
+string endDate, 
 int initialMethod, 
-float percentOf6Points
+float percentOf6Points,
+步数信息
+int nowStep(client side)
+int startStep(default 0)
+int maxStep(client side)
+交易信息
+int indexTrade
+int stockNum
+float cost
+flaot current
+float earnings
 end note
 
 Client <- Server : response
 note left
-参数：
+单个返回结果
+idList: list<int id>
+closeDict: dict<int id, float close>
+methodDict: dict<int id, int method>
+end note
+deactivate Server
+
+Client -> Server : request 改变nowStep
+note left
+
 end note
 
-deactivate Server
 
 @enduml
