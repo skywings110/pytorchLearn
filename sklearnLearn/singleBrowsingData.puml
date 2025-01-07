@@ -1,0 +1,46 @@
+@startuml single
+
+'单个浏览数据，已经完成获取数据'
+Client -> Server : request
+activate Server
+note left 
+基本信息
+int nowId = idList[nowStep],
+int close = closeList[nowId],
+int method = methodList[nowId]
+end note
+
+
+Server -> CloseList: getCloseFromCodeAndDate()
+activate CloseList
+note left
+获取收盘价
+string code
+string startDate
+string endDate
+end note
+
+CloseList -> MehtodList: getMethodFromClose()
+activate MehtodList
+note left
+获取method列表
+list<float>
+end note
+
+MehtodList -> CloseList: methodList
+deactivate MehtodList
+CloseList -> Server: closeList
+deactivate CloseList
+
+Client <- Server : response
+note left
+单个返回结果
+idList: list<int id>
+closeList: list<float close>
+methodList: list<int method>
+maxStep: int
+end note
+deactivate Server
+
+@enduml
+
