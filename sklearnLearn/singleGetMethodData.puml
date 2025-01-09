@@ -26,6 +26,8 @@ activate MehtodList
 note left
 获取method列表
 list<float>
+int intialMethod
+float percentOf6Points
 end note
 
 MehtodList -> CloseList: methodList

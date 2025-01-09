@@ -5,42 +5,42 @@ Client -> Server : request
 activate Server
 note left 
 int nowId = idList[nowStep],
-int close = closeList[nowId],
+float close = closeList[nowId],
 int method = methodList[nowId],
-bool isBuy(default True)
-bool isDisplay(default True)
+bool buyOrSell(default True)
 int tradeNum
 float totalMoney(Client)
 float currentMoney(Client)
 float discretionaryMoney(Client)
 end note
 
-Server -> Account : implementOperate()
+Server -> Account: implementAccountAlter()
 activate Account
+note left
+int nowId
+float close 
+int method
+bool buyOrSell(default True)
+int tradeNum
+float totalMoney(Client)
+float currentMoney(Client)
+float discretionaryMoney(Client)
+end note
 
-Account -> Server : 
+Account -> Voucher: generateVoucher()
+activate Voucher
+note left
+int nowId
+float close
 float totalMoney
 float currentMoney
+float discretionaryMoney
+bool buyOrSell
+int tradeNum
+end note
+
+Voucher -> Account: list[int id, float close, int tradeNum]
+deactivate Voucher
+
 deactivate Account
-
-CloseList -> MehtodList: getMethodFromClose()
-activate MehtodList
-note left
-获取method列表
-list<float>
-end note
-
-MehtodList -> CloseList: methodList
-deactivate MehtodList
-CloseList -> Server: closeList
-deactivate CloseList
-
-Client <- Server : response
-note left
-单个返回结果
-idList: list<int id>
-closeList: list<float close>
-methodList: list<int method>
-end note
-deactivate Server
 @enduml
