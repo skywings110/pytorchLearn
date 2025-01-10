@@ -39,6 +39,7 @@ note left
 idList: list<int id>
 closeList: list<float close>
 methodList: list<int method>
+dateList: <string date>
 maxStep: int
 end note
 deactivate Server
